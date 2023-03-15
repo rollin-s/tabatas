@@ -2,19 +2,22 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TBTRoute {
+class TBTRouteConfig {
   final Pattern pattern;
-  final Widget Function(BuildContext, BeamState, Object?) builder;
+  final String name;
+  final Widget Function(BeamState) builder;
 
-  Map<Pattern, Function(BuildContext, BeamState, Object?)> get beamRoute {
-    return {
-      pattern: builder,
-    };
+  BeamPage beamPage(BeamState state) {
+    return BeamPage(
+      key: ValueKey(name),
+      child: builder(state),
+    );
   }
 
-  TBTRoute({
+  TBTRouteConfig({
     required this.pattern,
     required this.builder,
+    required this.name,
   });
 }
 
